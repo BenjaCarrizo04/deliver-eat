@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "../../css/style.css";
 import { useNavigate } from "react-router-dom";
 
-import FormDireccion from "../components/FormDireccion";
+import FormDireccion from "../helpers/FormDireccion";
 import Button from "../components/Button";
 
 const Entrega = (props) => {

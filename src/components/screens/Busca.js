@@ -1,9 +1,15 @@
 import React, { useState } from "react";
-import "../../css/style.css";
-import { useNavigate } from "react-router-dom";
-
-import FormDireccion from "../components/FormDireccion";
-import Button from "../components/Button";
+import { Form, useNavigate } from "react-router-dom";
+import {
+    Box,
+    FormControl,
+    TextField,
+    Typography,
+    Button,
+    FormHelperText,
+    Grid,
+} from "@mui/material";
+import FormDireccion from "../helpers/FormDireccion";
 
 const Busca = (props) => {
   const [error, setError] = useState({ errorCalle: false, errorNro: false });
