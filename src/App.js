@@ -5,6 +5,8 @@ import { React, useEffect, useState } from "react";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import Descripcion from "./components/screens/Descripcion";
 import Resumen from "./components/screens/Resumen";
+import Busca from "./components/screens/Busca";
+import Entrega from "./components/screens/Entrega";
 
 function App() {
   const [pedido, setPedido] = useState({
@@ -250,6 +252,29 @@ function App() {
                   onMontoEfectivoChange={onMontoEfectivoChange}
                   efectivo={pedido.efectivo}
                   precio={pedido.precio}
+                />
+              }
+            ></Route>
+            <Route
+              path="/busca"
+              element={
+                <Busca
+                  contexto={pedido.busca}
+                  onCalleChange={onBuscaCalleChange}
+                  onNroChange={onBuscaNroChange}
+                  onCiudadChange={onBuscaCiudadChange}
+                  onObservacionChange={onBuscaObservacionChange}
+                />
+              }
+            ></Route>
+            <Route
+              path="/entrega"
+              element={
+                <Entrega
+                  contexto={pedido.entrega}
+                  onCalleChange={onEntregaCalleChange}
+                  onNroChange={onEntregaNroChange}
+                  onObservacionChange={onEntregaObservacionChange}
                 />
               }
             ></Route>
