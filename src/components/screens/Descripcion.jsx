@@ -25,34 +25,7 @@ const Descripcion = (props) => {
   };
 
   const handleBoton = (e) => {
-    const err = error;
-    if (props.descripcion.trim().length === 0) {
-      err.errorDescripcion = true;
-      setError({ ...err });
-    } else {
-      err.errorDescripcion = false;
-      setError({ ...err });
-    }
-
-    if (props.imagen.size * 1e-6 > 5.0) {
-      err.errorImagen = true;
-      setError({ ...err });
-    } else if (props.imagen.type !== "image/jpeg") {
-      err.errorImagen = true;
-      setError({ ...err });
-    } else {
-      err.errorImagen = false;
-      setError({ ...err });
-    }
-
-    if (props.imagen === "") {
-      err.errorImagen = false;
-      setError({ ...err });
-    }
-
-    if (!error.errorDescripcion && !error.errorImagen) {
-      navigate("/busca");
-    }
+    navigate("/busca");
   };
 
   const routeBack = (e) => {
@@ -97,38 +70,53 @@ const Descripcion = (props) => {
 
   return (
     <div style={{ margin: "15%" }}>
-      <FormControl fullWidth>
-        <Typography variant="h4">Preparemos tu pedido</Typography>
+      <FormControl
+        fullWidth
+        sx={{
+          display: "flex",
+          justifyContent: "space-around",
+          alignItems: "stretch",
+        }}
+      >
+        <div>
+          <Typography variant="h4" sx={{ marginBottom: "20px" }}>
+            Preparemos tu pedido
+          </Typography>
+        </div>
         <div style={{ marginLeft: "10px" }}>
-          <TextField
-            label="¿Que queres pedir?"
-            multiline
-            inputProps={{ maxLength: 240 }}
-            required
-            sx={{ margin: "10px 0px 15px 0px" }}
-            minRows={5}
-            fullWidth
-            onChange={handleOnDescriptionChange}
-            error={error?.description ? true : false}
-            helperText={error?.description}
-            value={props.descripcion}
-          ></TextField>
-          <FormHelperText>
-            {props.imagen ? props.imagen.name : ""}
-          </FormHelperText>
-          <Button
-            component="label"
-            variant="contained"
-            startIcon={<CloudUploadIcon />}
-            href="#file-upload"
-            onChange={handleOnImageChange}
-            error={error?.image ? true : false}
-            helperText={error?.image}
-          >
-            Subir Archivo
-            <VisuallyHiddenInput accept="image/jpeg" type="file" />
-          </Button>
-          <FormHelperText>Maximo 5MB, solo JPG</FormHelperText>
+          <div>
+            <TextField
+              label="¿Que queres pedir?"
+              multiline
+              inputProps={{ maxLength: 240 }}
+              required
+              sx={{ margin: "10px 0px 15px 0px" }}
+              minRows={5}
+              fullWidth
+              onChange={handleOnDescriptionChange}
+              error={error?.description ? true : false}
+              helperText={error?.description}
+              value={props.descripcion}
+            ></TextField>
+          </div>
+          <Box>
+            <Button
+              component="label"
+              variant="contained"
+              startIcon={<CloudUploadIcon />}
+              href="#file-upload"
+              onChange={handleOnImageChange}
+              error={error?.image ? true : false}
+              helperText={error?.image}
+            >
+              Subir Archivo
+              <VisuallyHiddenInput accept="image/jpeg" type="file" />
+            </Button>
+            <FormHelperText sx={{ display: "inline-block" }}>
+              {props.imagen ? props.imagen.name : ""}
+            </FormHelperText>
+            <FormHelperText>Maximo 5MB, solo JPG</FormHelperText>
+          </Box>
         </div>
       </FormControl>
       <Box
@@ -138,7 +126,13 @@ const Descripcion = (props) => {
           justifyContent: "flex-end",
         }}
       >
-        <Button size="small">Siguiente</Button>
+        <Button
+          size="small"
+          disabled={Object.keys(error).some((x) => error[x]) > 0}
+          onClick={handleBoton}
+        >
+          Siguiente
+        </Button>
       </Box>
     </div>
   );
