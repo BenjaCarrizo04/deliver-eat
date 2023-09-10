@@ -230,7 +230,7 @@ function App() {
           <Routes>
             <Route
               exact
-              path="/resumen"
+              path="/"
               element={
                 <Descripcion
                   descripcion={pedido.descripcion}
@@ -241,7 +241,7 @@ function App() {
               }
             ></Route>
             <Route
-              path="/"
+              path="/resumen"
               element={
                 <Resumen
                   tarjeta={pedido.tarjeta}

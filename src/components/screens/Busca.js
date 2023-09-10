@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { Form, useNavigate } from "react-router-dom";
 import {
-    Box,
-    FormControl,
-    TextField,
-    Typography,
-    Button,
-    FormHelperText,
-    Grid,
+  Box,
+  FormControl,
+  TextField,
+  Typography,
+  Button,
+  FormHelperText,
+  Grid,
 } from "@mui/material";
 import FormDireccion from "../helpers/FormDireccion";
 
@@ -16,26 +16,7 @@ const Busca = (props) => {
   let navigate = useNavigate();
 
   const handleBoton = (e) => {
-    let err = error;
-    if (props.contexto.calle.trim().length === 0) {
-      err.errorCalle = true;
-      setError({ ...err });
-    } else {
-      err.errorCalle = false;
-      setError({ ...err });
-    }
-
-    if (props.contexto.nro.trim().length === 0) {
-      err.errorNro = true;
-      setError({ ...err });
-    } else {
-      err.errorNro = false;
-      setError({ ...err });
-    }
-
-    if (!error.errorCalle && !error.errorNro) {
-      navigate("/entrega");
-    }
+    navigate("/entrega");
   };
 
   const routeBack = (e) => {
@@ -59,6 +40,18 @@ const Busca = (props) => {
       />
 
       <Button routeBack={routeBack} handleBoton={handleBoton} />
+      <Box
+        sx={{
+          marginTop: "40px",
+          display: "flex",
+          justifyContent: "flex-end",
+          minHeight: "20%",
+        }}
+      >
+        <Button size="normal" onClick={handleBoton}>
+          Siguiente
+        </Button>
+      </Box>
     </div>
   );
 };
