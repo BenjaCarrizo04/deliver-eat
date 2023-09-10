@@ -7,7 +7,6 @@ import {
   Typography,
   Button,
   FormHelperText,
-  Grid,
 } from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { styled } from "@mui/material/styles";
@@ -15,7 +14,10 @@ import { styled } from "@mui/material/styles";
 const Descripcion = (props) => {
   const hiddenFileInput = React.useRef(null);
 
-  const [error, setError] = useState({});
+  const [error, setError] = useState({
+    description: undefined,
+    imagen: "",
+  });
 
   let navigate = useNavigate();
 
@@ -38,7 +40,7 @@ const Descripcion = (props) => {
     if (e.target.value === "" || e.target.value === undefined) {
       err.description = "La descripcion no puede estar vacia";
     } else {
-      err.description = undefined;
+      err.description = "";
     }
     setError({ ...err });
     props.onDescripcionChange(e);
@@ -50,7 +52,7 @@ const Descripcion = (props) => {
     if (e.target.files[0].size * 1e-6 > 5.0) {
       err.image = "El archivo es demasiado grande";
     } else {
-      err.image = undefined;
+      err.image = "";
     }
     setError({ ...err });
     props.onImagenChange(e);
@@ -78,27 +80,24 @@ const Descripcion = (props) => {
           alignItems: "stretch",
         }}
       >
-        <div>
-          <Typography variant="h4" sx={{ marginBottom: "20px" }}>
-            Preparemos tu pedido
-          </Typography>
-        </div>
+        <Typography variant="h4" sx={{ marginBottom: "20px" }}>
+          Preparemos tu pedido
+        </Typography>
+
         <div style={{ marginLeft: "10px" }}>
-          <div>
-            <TextField
-              label="¿Que queres pedir?"
-              multiline
-              inputProps={{ maxLength: 240 }}
-              required
-              sx={{ margin: "10px 0px 15px 0px" }}
-              minRows={5}
-              fullWidth
-              onChange={handleOnDescriptionChange}
-              error={error?.description ? true : false}
-              helperText={error?.description}
-              value={props.descripcion}
-            ></TextField>
-          </div>
+          <TextField
+            label="¿Que queres pedir?"
+            multiline
+            inputProps={{ maxLength: 240 }}
+            required
+            sx={{ margin: "10px 0px 15px 0px" }}
+            minRows={5}
+            fullWidth
+            onChange={handleOnDescriptionChange}
+            error={error?.description ? true : false}
+            helperText={error?.description}
+            value={props.descripcion}
+          ></TextField>
           <Box>
             <Button
               component="label"
@@ -127,8 +126,12 @@ const Descripcion = (props) => {
         }}
       >
         <Button
-          size="small"
-          disabled={Object.keys(error).some((x) => error[x]) > 0}
+          size="normal"
+          disabled={
+            Object.keys(error).some(
+              (x) => error[x] === undefined || error[x] !== ""
+            ) > 0
+          }
           onClick={handleBoton}
         >
           Siguiente

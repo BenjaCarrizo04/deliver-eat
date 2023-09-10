@@ -4,6 +4,7 @@ import { Container, Box } from "@mui/material";
 import { React, useEffect, useState } from "react";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import Descripcion from "./components/screens/Descripcion";
+import Resumen from "./components/screens/Resumen";
 
 function App() {
   const [pedido, setPedido] = useState({
@@ -93,11 +94,7 @@ function App() {
 
   const onNumeroTarjetaChange = (nuevoNumero) => {
     let op = pedido;
-
-    op.tarjeta.numero = nuevoNumero.target.value
-      .replace(/\W/gi, "")
-      .replace(/(.{4})/g, "$1 ");
-
+    op.tarjeta.numero = nuevoNumero.target.value;
     setPedido({ ...op });
   };
 
@@ -222,8 +219,8 @@ function App() {
           display: "flex",
           borderRadius: "5px",
           backgroundColor: "#F0E6EF",
-          width: "50%",
-          height: "80%",
+          width: "40%",
+          minHeight: "60%",
           flexDirection: "column",
         }}
       >
@@ -231,13 +228,28 @@ function App() {
           <Routes>
             <Route
               exact
-              path="/"
+              path="/resumen"
               element={
                 <Descripcion
                   descripcion={pedido.descripcion}
                   imagen={pedido.imagen}
                   onDescripcionChange={onDescripcionChange}
                   onImagenChange={onImagenChange}
+                />
+              }
+            ></Route>
+            <Route
+              path="/"
+              element={
+                <Resumen
+                  tarjeta={pedido.tarjeta}
+                  onNumeroTarjetaChange={onNumeroTarjetaChange}
+                  onNombreTarjetaChange={onNombreTarjetaChange}
+                  onMmaaTarjetaChange={onMmaaTarjetaChange}
+                  onCvvTarjetaChange={onCvvTarjetaChange}
+                  onMontoEfectivoChange={onMontoEfectivoChange}
+                  efectivo={pedido.efectivo}
+                  precio={pedido.precio}
                 />
               }
             ></Route>
