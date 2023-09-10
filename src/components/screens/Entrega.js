@@ -1,9 +1,15 @@
 import React, { useState, useEffect } from "react";
-import "../../css/style.css";
-import { useNavigate } from "react-router-dom";
-
+import { Form, useNavigate } from "react-router-dom";
+import {
+    Box,
+    FormControl,
+    TextField,
+    Typography,
+    Button,
+    FormHelperText,
+    Grid,
+} from "@mui/material";
 import FormDireccion from "../helpers/FormDireccion";
-import Button from "../components/Button";
 
 const Entrega = (props) => {
   const [error, setError] = useState({
@@ -37,9 +43,9 @@ const Entrega = (props) => {
     navigate("/busca");
   };
 
-  useEffect(() => {
-    props.setIsDisplayed(false);
-  });
+  // useEffect(() => {
+  //   props.setIsDisplayed(false);
+  // });
 
   return (
     <div className="l-entrega">
@@ -48,8 +54,6 @@ const Entrega = (props) => {
         onCalleChange={props.onCalleChange}
         onNroChange={props.onNroChange}
         onObservacionChange={props.onObservacionChange}
-        setIsDisplayed={props.setIsDisplayed}
-        error={error}
         titulo={"¿Donde lo entregamos?"}
         disable={true}
       />

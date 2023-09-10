@@ -54,8 +54,6 @@ const Busca = (props) => {
         onNroChange={props.onNroChange}
         onObservacionChange={props.onObservacionChange}
         onCiudadChange={props.onCiudadChange}
-        setIsDisplayed={props.setIsDisplayed}
-        error={error}
         titulo={"¿Donde lo buscamos?"}
         disable={false}
       />
