@@ -220,7 +220,6 @@ function App() {
       <Box
         sx={{
           display: "flex",
-          justifyContent: "center",
           borderRadius: "5px",
           backgroundColor: "#F0E6EF",
           width: "50%",
