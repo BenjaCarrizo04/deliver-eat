@@ -24,9 +24,23 @@ const Resumen = (props) => {
   });
   const [formaPago, setFormaPago] = useState("efectivo");
 
-  const [errorEfectivo, setErrorEfectivo] = useState(false);
-
   let navigate = useNavigate();
+
+  // clean all parameters when changing pay method
+  useEffect(() => {
+    props.onNumeroTarjetaChange({ target: { value: "" } });
+    props.onNombreTarjetaChange({ target: { value: "" } });
+    props.onCvvTarjetaChange({ target: { value: "" } });
+    props.onMmaaTarjetaChange({ target: { value: "" } });
+    props.onMontoEfectivoChange({ target: { value: "" } });
+    setErrorTarjeta({
+      efectivo: undefined,
+      errorTarjetaNro: undefined,
+      errorTarjetaNombre: undefined,
+      errorTarjetaMmaa: undefined,
+      errorTarjetaCvv: undefined,
+    });
+  }, [formaPago]);
 
   const onEfectivoClick = (e) => {
     let fp = formaPago;
@@ -47,69 +61,7 @@ const Resumen = (props) => {
   };
 
   const handleBoton = (e) => {
-    let err = errorTarjeta;
-    let mmTarjeta = props.tarjeta.mmaa.trim().substring(0, 2);
-    let aaTarjeta = props.tarjeta.mmaa.trim().substring(3, 5);
-    let date = new Date();
-
-    let mmActual = ("0" + (date.getMonth() + 1)).slice(-2);
-    let aaActual = ("0" + date.getFullYear()).slice(-2);
-
-    if (props.tarjeta.mmaa.trim().length !== 5) {
-      err.errorTarjetaMmaa = true;
-      setErrorTarjeta({ ...err });
-    } else if (aaTarjeta < aaActual) {
-      err.errorTarjetaMmaa = true;
-      setErrorTarjeta({ ...err });
-    } else if (aaTarjeta === aaActual && mmTarjeta < mmActual) {
-      err.errorTarjetaMmaa = true;
-      setErrorTarjeta({ ...err });
-    } else {
-      err.errorTarjetaMmaa = false;
-      setErrorTarjeta({ ...err });
-    }
-
-    if (props.tarjeta.cvv.trim().length !== 3) {
-      err.errorTarjetaCvv = true;
-      setErrorTarjeta({ ...err });
-    } else {
-      err.errorTarjetaCvv = false;
-      setErrorTarjeta({ ...err });
-    }
-
-    if (props.tarjeta.nombre.trim().length === 0) {
-      err.errorTarjetaNombre = true;
-      setErrorTarjeta({ ...err });
-    } else {
-      err.errorTarjetaNombre = false;
-      setErrorTarjeta({ ...err });
-    }
-
-    if (props.tarjeta.numero.trim().length !== 19) {
-      err.errorTarjetaNro = true;
-      setErrorTarjeta({ ...err });
-    } else {
-      err.errorTarjetaNro = false;
-      setErrorTarjeta({ ...err });
-    }
-
-    if (props.efectivo === 0 || props.efectivo < props.precio) {
-      setErrorEfectivo(true);
-    } else {
-      setErrorEfectivo(false);
-
-      navigate("/recibida");
-    }
-
-    if (
-      formaPago.tarjeta &&
-      !errorTarjeta.errorTarjetaNro &&
-      !errorTarjeta.errorTarjetaNombre &&
-      !errorTarjeta.errorTarjetaMmaa &&
-      !errorTarjeta.errorTarjetaCvv
-    ) {
-      navigate("/recibida");
-    }
+    navigate("/recibida");
   };
 
   const routeBack = (e) => {
@@ -162,6 +114,17 @@ const Resumen = (props) => {
     }
     setErrorTarjeta({ ...err });
     props.onCvvTarjetaChange(e);
+  };
+
+  const onMmaaTarjetaChange = (e) => {
+    let err = errorTarjeta;
+    if (e.target.value.trim().length !== 5) {
+      err.errorTarjetaMmaa = "La fecha es incorrecta";
+    } else {
+      err.errorTarjetaMmaa = "";
+    }
+    setErrorTarjeta({ ...err });
+    props.onMmaaTarjetaChange(e);
   };
 
   const validateSave = () => {
@@ -225,8 +188,8 @@ const Resumen = (props) => {
               sx={{ margin: "10px 0px 15px 0px" }}
               fullWidth
               onChange={onMontoEfectivoChange}
-              error={errorEfectivo}
-              helperText={errorEfectivo}
+              error={errorTarjeta.efectivo}
+              helperText={errorTarjeta.efectivo}
               value={props.efectivo}
             ></TextField>
           </div>
@@ -268,7 +231,7 @@ const Resumen = (props) => {
                 required
                 fullWidth
                 sx={{ margin: "10px 10px 15px 0px" }}
-                onChange={props.onMmaaTarjetaChange}
+                onChange={onMmaaTarjetaChange}
                 error={errorTarjeta.errorTarjetaMmaa}
                 helperText={
                   errorTarjeta.errorTarjetaMmaa ? "La fecha es incorrecta" : ""
@@ -281,7 +244,7 @@ const Resumen = (props) => {
                 required
                 fullWidth
                 sx={{ margin: "10px 0px 15px 0px" }}
-                onChange={props.onCvvTarjetaChange}
+                onChange={onCvvTarjetaChange}
                 error={errorTarjeta.errorTarjetaCvv}
                 helperText={
                   errorTarjeta.errorTarjetaCvv ? "El CVV es incorrecto" : ""
@@ -308,7 +271,7 @@ const Resumen = (props) => {
                   x === "efectivo" ? errorTarjeta[x] !== "" : false
                 ) > 0
               : Object.keys(errorTarjeta).some((x) =>
-                  x !== "monto"
+                  x !== "efectivo"
                     ? errorTarjeta[x] === undefined || errorTarjeta[x] !== ""
                     : false
                 )
