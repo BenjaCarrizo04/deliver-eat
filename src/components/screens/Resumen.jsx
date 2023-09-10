@@ -118,13 +118,31 @@ const Resumen = (props) => {
 
   const onMmaaTarjetaChange = (e) => {
     let err = errorTarjeta;
-    if (e.target.value.trim().length !== 5) {
-      err.errorTarjetaMmaa = "La fecha es incorrecta";
+
+    if (e.target.value.length !== 5 || !validateDate(e.target.value)) {
+      err.errorTarjetaMmaa = "La fecha es inválida";
     } else {
       err.errorTarjetaMmaa = "";
     }
     setErrorTarjeta({ ...err });
     props.onMmaaTarjetaChange(e);
+  };
+
+  const validateDate = (dateString) => {
+    const [month, year] = dateString.split("/").map(Number);
+    let date = null;
+    let actualYear = new Date().getFullYear();
+    if (month >= 1 && month <= 12 && 2000 + year >= actualYear) {
+      const day = 1;
+      date = new Date(year + 2000, month - 1, day);
+      if (date === "Invalid Date") {
+        return false;
+      } else {
+        return true;
+      }
+    } else {
+      return false;
+    }
   };
 
   const validateSave = () => {
@@ -144,6 +162,15 @@ const Resumen = (props) => {
   };
   return (
     <div style={{ margin: "15%" }}>
+      <FormControl sx={{ display: "flex", alignItems: "center" }}>
+        <Typography variant="h4" sx={{ marginBottom: "20px" }}>
+          Resumen de pedido
+        </Typography>
+      </FormControl>
+
+      <br />
+      <Divider variant="fullWidth" />
+      <br />
       <FormControl
         fullWidth
         sx={{
@@ -174,7 +201,7 @@ const Resumen = (props) => {
         </RadioGroup>
 
         <br />
-        <Divider variant="fullWidth" />
+        <Divider variant="middle" />
         <br />
         {formaPago === "efectivo" ? (
           <div>
@@ -282,27 +309,6 @@ const Resumen = (props) => {
         </Button>
       </Box>
     </div>
-
-    /*     <div className="l-resumen">
-      <Total precio={props.precio} />
-
-      <FormaPago
-        tarjeta={props.tarjeta}
-        onNumeroTarjetaChange={props.onNumeroTarjetaChange}
-        onNombreTarjetaChange={props.onNombreTarjetaChange}
-        onCvvTarjetaChange={props.onCvvTarjetaChange}
-        onMmaaTarjetaChange={props.onMmaaTarjetaChange}
-        onMontoEfectivoChange={props.onMontoEfectivoChange}
-        errorTarjeta={errorTarjeta}
-        errorEfectivo={errorEfectivo}
-        efectivo={props.efectivo}
-        formaPago={formaPago}
-        onEfectivoClick={onEfectivoClick}
-        onTarjetaClick={onTarjetaClick}
-      ></FormaPago>
-
-      <Button routeBack={routeBack} handleBoton={handleBoton} />
-    </div> */
   );
 };
 
