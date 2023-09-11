@@ -7,6 +7,7 @@ import Descripcion from "./components/screens/Descripcion";
 import Resumen from "./components/screens/Resumen";
 import Busca from "./components/screens/Busca";
 import Entrega from "./components/screens/Entrega";
+import Recibida from "./components/screens/Recibida";
 
 function App() {
   const [pedido, setPedido] = useState({
@@ -238,6 +239,17 @@ function App() {
               path="/entrega"
               element={
                 <Entrega
+                  contexto={pedido.entrega}
+                  onCalleChange={onEntregaCalleChange}
+                  onNroChange={onEntregaNroChange}
+                  onObservacionChange={onEntregaObservacionChange}
+                />
+              }
+            ></Route>
+            <Route
+              path="/recibida"
+              element={
+                <Recibida
                   contexto={pedido.entrega}
                   onCalleChange={onEntregaCalleChange}
                   onNroChange={onEntregaNroChange}
