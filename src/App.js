@@ -7,6 +7,7 @@ import Descripcion from "./components/screens/Descripcion";
 import Resumen from "./components/screens/Resumen";
 import Busca from "./components/screens/Busca";
 import Entrega from "./components/screens/Entrega";
+import NavBar from "./components/helpers/Navbar";
 
 function App() {
   const [pedido, setPedido] = useState({
@@ -172,83 +173,94 @@ function App() {
 
     setPedido({ ...op });
   }, [pedido.distancia]);
+
+  const boxStyle = {
+    display: "flex",
+    borderRadius: "5px",
+    boxShadow: "0px 0px 20px #000000",
+    backgroundColor: "#F0E6EF",
+    width: "40%",
+    "@media(max-width: 1300px)": {
+      width: "80%",
+    },
+    "@media(max-width: 800px)": {
+      width: "100%",
+    },
+    minHeight: "60%",
+    flexDirection: "column",
+  };
+
   return (
-    <Container
-      sx={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        height: "100vh",
-        backgroundColor: "#9C89B8",
-      }}
-      maxWidth="false"
-    >
-      <Box
+    <div>
+      <NavBar></NavBar>
+      <Container
         sx={{
           display: "flex",
-          borderRadius: "5px",
-          backgroundColor: "#F0E6EF",
-          width: "40%",
-          minHeight: "60%",
-          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+          backgroundColor: "#9C89B8",
         }}
+        maxWidth="false"
       >
-        <BrowserRouter>
-          <Routes>
-            <Route
-              exact
-              path="/"
-              element={
-                <Descripcion
-                  descripcion={pedido.descripcion}
-                  imagen={pedido.imagen}
-                  onDescripcionChange={onDescripcionChange}
-                  onImagenChange={onImagenChange}
-                />
-              }
-            ></Route>
-            <Route
-              path="/resumen"
-              element={
-                <Resumen
-                  tarjeta={pedido.tarjeta}
-                  onNumeroTarjetaChange={onNumeroTarjetaChange}
-                  onNombreTarjetaChange={onNombreTarjetaChange}
-                  onMmaaTarjetaChange={onMmaaTarjetaChange}
-                  onCvvTarjetaChange={onCvvTarjetaChange}
-                  onMontoEfectivoChange={onMontoEfectivoChange}
-                  efectivo={pedido.efectivo}
-                  precio={pedido.precio}
-                />
-              }
-            ></Route>
-            <Route
-              path="/busca"
-              element={
-                <Busca
-                  contexto={pedido.busca}
-                  onCalleChange={onBuscaCalleChange}
-                  onNroChange={onBuscaNroChange}
-                  onCiudadChange={onBuscaCiudadChange}
-                  onObservacionChange={onBuscaObservacionChange}
-                />
-              }
-            ></Route>
-            <Route
-              path="/entrega"
-              element={
-                <Entrega
-                  contexto={pedido.entrega}
-                  onCalleChange={onEntregaCalleChange}
-                  onNroChange={onEntregaNroChange}
-                  onObservacionChange={onEntregaObservacionChange}
-                />
-              }
-            ></Route>
-          </Routes>
-        </BrowserRouter>
-      </Box>
-    </Container>
+        <Box sx={boxStyle}>
+          <BrowserRouter>
+            <Routes>
+              <Route
+                exact
+                path="/"
+                element={
+                  <Descripcion
+                    descripcion={pedido.descripcion}
+                    imagen={pedido.imagen}
+                    onDescripcionChange={onDescripcionChange}
+                    onImagenChange={onImagenChange}
+                  />
+                }
+              ></Route>
+              <Route
+                path="/resumen"
+                element={
+                  <Resumen
+                    tarjeta={pedido.tarjeta}
+                    onNumeroTarjetaChange={onNumeroTarjetaChange}
+                    onNombreTarjetaChange={onNombreTarjetaChange}
+                    onMmaaTarjetaChange={onMmaaTarjetaChange}
+                    onCvvTarjetaChange={onCvvTarjetaChange}
+                    onMontoEfectivoChange={onMontoEfectivoChange}
+                    efectivo={pedido.efectivo}
+                    precio={pedido.precio}
+                  />
+                }
+              ></Route>
+              <Route
+                path="/busca"
+                element={
+                  <Busca
+                    contexto={pedido.busca}
+                    onCalleChange={onBuscaCalleChange}
+                    onNroChange={onBuscaNroChange}
+                    onCiudadChange={onBuscaCiudadChange}
+                    onObservacionChange={onBuscaObservacionChange}
+                  />
+                }
+              ></Route>
+              <Route
+                path="/entrega"
+                element={
+                  <Entrega
+                    contexto={pedido.entrega}
+                    onCalleChange={onEntregaCalleChange}
+                    onNroChange={onEntregaNroChange}
+                    onObservacionChange={onEntregaObservacionChange}
+                  />
+                }
+              ></Route>
+            </Routes>
+          </BrowserRouter>
+        </Box>
+      </Container>
+    </div>
   );
 }
 
