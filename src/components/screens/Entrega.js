@@ -13,9 +13,10 @@ import FormDireccion from "../helpers/FormDireccion";
 
 const Entrega = (props) => {
   const [error, setError] = useState({
-    errorCalle: false,
-    errorNro: false,
+    calle: undefined,
+    nro: undefined,
   });
+
   let navigate = useNavigate();
 
   const handleBoton = (e) => {
@@ -37,6 +38,8 @@ const Entrega = (props) => {
         onCalleChange={props.onCalleChange}
         onNroChange={props.onNroChange}
         onObservacionChange={props.onObservacionChange}
+        error={error}
+        setError={setError}
         titulo={"¿Donde lo entregamos?"}
         disable={true}
       />
@@ -50,7 +53,15 @@ const Entrega = (props) => {
           minHeight: "20%",
         }}
       >
-        <Button size="normal" onClick={handleBoton}>
+        <Button
+            size="normal"
+            disabled={
+                Object.keys(error).some(
+                    (x) => error[x] === undefined || error[x] !== ""
+                ) > 0
+            }
+            onClick={handleBoton}
+            >
           Siguiente
         </Button>
       </Box>

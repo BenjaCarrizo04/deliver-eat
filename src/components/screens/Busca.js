@@ -12,8 +12,12 @@ import {
 import FormDireccion from "../helpers/FormDireccion";
 
 const Busca = (props) => {
-  const [error, setError] = useState({ errorCalle: false, errorNro: false });
   let navigate = useNavigate();
+
+  const [error, setError] = useState({
+      calle: undefined,
+      nro: undefined,
+  });
 
   const handleBoton = (e) => {
     navigate("/entrega");
@@ -35,6 +39,8 @@ const Busca = (props) => {
         onNroChange={props.onNroChange}
         onObservacionChange={props.onObservacionChange}
         onCiudadChange={props.onCiudadChange}
+        error={error}
+        setError={setError}
         titulo={"¿Donde lo buscamos?"}
         disable={false}
       />
@@ -48,7 +54,15 @@ const Busca = (props) => {
           minHeight: "20%",
         }}
       >
-        <Button size="normal" onClick={handleBoton}>
+        <Button
+            size="normal"
+            disabled={
+                Object.keys(error).some(
+                    (x) => error[x] === undefined || error[x] !== ""
+                ) > 0
+            }
+            onClick={handleBoton}
+            >
           Siguiente
         </Button>
       </Box>
