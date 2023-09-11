@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 // import FechaHora from "../components/FechaHora";
 // import Tarjeta from "./Tarjeta";
 import dayjs from "dayjs";
@@ -11,124 +11,37 @@ import { DateTimePicker } from "@mui/x-date-pickers";
 
 const Recibida = (props) => {
     const [recibida, setRecibida] = useState("asap");
-    const [antesPosible, setAntesPosible] = useState(false);
-    const [Fecha, setFecha] = useState(false);
-    const [error, setError] = useState({
-        errorFecha: false,
-        errorHora: false,
-    });
+    const [error, setError] = useState(null);
+    const [dateTime, setDateTime] = useState(dayjs())
+
+    const errorMessage = useMemo(() => {
+        switch (error) {
+            case "maxTime":
+            case "minTime": {
+                console.log(dateTime.format("DD/MM/YYYY") === dayjs().format("DD/MM/YYYY"), dateTime.format("HH:mm"), dayjs().format("HH:mm"))
+                return (dateTime.format("DD/MM/YYYY") === dayjs().format("DD/MM/YYYY") && dateTime.format("HH:mm") <= dayjs().format("HH:mm") ? 
+                "El horario tiene que ser posterior al actual" : "El horario tiene que estar entre las 07:00 y las 23:59")
+            }
+            case "maxDate":
+            case "minDate": {
+                return "La fecha tiene que estar entre hoy y dentro de una semana";
+            }
+            default: {
+                return "";
+            }
+        }
+    }, [error]);
+
     let navigate = useNavigate();
 
-    const handleAntesPosible = (e) => {
-        if (Fecha) {
-            setFecha(false);
-        }
-        setAntesPosible(true);
-    };
-
-    const handleFecha = (e) => {
-        if (antesPosible) {
-            setAntesPosible(false);
-        }
-        setFecha(true);
-    };
-
     const handleBoton = (e) => {
-        let err = error;
-        let date = new Date();
-        let dateUnaSemana = new Date(date.getTime() + 6.048e8);
-        let dateMediaHora = new Date(date.getTime() + 1.8e6);
-
-        let añoIngresado = props.recibida.fecha.substring(0, 4),
-            mesIngresado = props.recibida.fecha.substring(5, 7),
-            diaIngresado = props.recibida.fecha.substring(8, 10);
-
-        let mesActual = ("0" + (date.getMonth() + 1)).slice(-2),
-            añoActual = String(date.getFullYear()),
-            diaActual = String(date.getDate());
-
-        let mesUnaSemana = ("0" + (dateUnaSemana.getMonth() + 1)).slice(-2),
-            añoUnaSemana = String(dateUnaSemana.getFullYear()),
-            diaUnaSemana = String(dateUnaSemana.getDate());
-
-        let horaActual = String(date.getHours());
-
-        let horaMediaHora = String(dateMediaHora.getHours()),
-            minutoMediaHora = String(dateMediaHora.getMinutes());
-
-        let horaIngresada = props.recibida.hora.substring(0, 2),
-            minutoIngresado = props.recibida.hora.substring(3, 5);
-
-        if (props.recibida.fecha.trim().length === 0) {
-            err.errorFecha = true;
-            setError({ ...err });
-        } else if (añoIngresado !== añoActual && añoIngresado !== añoUnaSemana) {
-            err.errorFecha = true;
-            setError({ ...err });
-        } else if (
-            (añoIngresado === añoActual && mesIngresado < mesActual) ||
-            (añoIngresado === añoUnaSemana && mesIngresado > mesUnaSemana)
-        ) {
-            err.errorFecha = true;
-            setError({ ...err });
-        } else if (
-            (añoIngresado === añoActual &&
-                mesIngresado === mesActual &&
-                diaIngresado < diaActual) ||
-            (añoIngresado === añoUnaSemana &&
-                mesIngresado === mesUnaSemana &&
-                diaIngresado > diaUnaSemana)
-        ) {
-            err.errorFecha = true;
-            setError({ ...err });
-        } else {
-            err.errorFecha = false;
-
-            setError({ ...err });
-        }
-
-        if (!horaIngresada) {
-            err.errorHora = true;
-            setError({ ...err });
-        } else if (Number(horaIngresada) < 8) {
-            err.errorHora = true;
-            setError({ ...err });
-        } else if (Number(horaIngresada) >= 23) {
-            err.errorHora = true;
-            setError({ ...err });
-        } else if (
-            añoIngresado === añoActual &&
-            mesIngresado === mesActual &&
-            diaIngresado === diaActual &&
-            Number(horaIngresada) < Number(horaMediaHora)
-        ) {
-            err.errorHora = true;
-            setError({ ...err });
-        } else if (
-            añoIngresado === añoActual &&
-            mesIngresado === mesActual &&
-            diaIngresado === diaActual &&
-            (horaIngresada === horaActual || horaIngresada === horaMediaHora) &&
-            Number(minutoIngresado) < Number(minutoMediaHora)
-        ) {
-            err.errorHora = true;
-            setError({ ...err });
-        } else {
-            err.errorHora = false;
-            setError({ ...err });
-        }
-
-        if (!error.errorFecha && !error.errorHora) {
-            navigate("/checkout");
-        }
-
-        if (antesPosible) {
-            navigate("/checkout");
-        }
+        navigate("/checkout");
     };
+
     const routeBack = (e) => {
         navigate("/resumen");
     };
+
 
     return (
         <div style={{ margin: "15%" }}>
@@ -152,12 +65,20 @@ const Recibida = (props) => {
                         <Typography variant="h4" sx={{ marginBottom: "20px" }}>Seleccionar Fecha y Hora</Typography>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <DateTimePicker
-                                defaultValue={dayjs()}
-                                minTime={dayjs().set('hour', 7).startOf('hour')}
+                                minTime={dayjs().format("DD/MM/YYYY") === dateTime.format("DD/MM/YYYY") ? dayjs() : dayjs().set('hour', 7).set('minutes', 0)}
                                 maxTime={dayjs().add(7, 'day').set('hour', 23).set('minutes', 59)}
                                 maxDate={dayjs().add(6, 'day')}
-                                disablePast
+                                minDate={dayjs()}
+                                value={dateTime}
+                                onError={(newError) => setError(newError)}
+                                onChange={(newDT) => setDateTime(newDT)}
                                 closeOnSelect={false}
+                                ampm={false}
+                                slotProps={{
+                                    textField: {
+                                        helperText: errorMessage,
+                                    },
+                                }}
                             />
                         </LocalizationProvider>
                     </div>)}
@@ -172,9 +93,7 @@ const Recibida = (props) => {
                 <Button
                     size="normal"
                     disabled={
-                        Object.keys(error).some(
-                            (x) => error[x] === undefined || error[x] !== ""
-                        ) > 0
+                        error != null && recibida === "date" ? true : false
                     }
                     onClick={handleBoton}
                 >
