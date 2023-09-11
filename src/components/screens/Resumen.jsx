@@ -169,7 +169,7 @@ const Resumen = (props) => {
       </FormControl>
 
       <br />
-      <Divider variant="fullWidth" />
+      <Divider sx={{ margin: "5px 0px 5px 0px" }} variant="fullWidth" />
       <br />
       <FormControl
         fullWidth
@@ -185,6 +185,7 @@ const Resumen = (props) => {
         </Typography>
         <FormLabel>Forma de pago</FormLabel>
         <RadioGroup
+          sx={{ margin: "5px 0px 5px 0px" }}
           defaultValue="efectivo"
           onChange={(e) => setFormaPago(e.target.value)}
         >
@@ -205,7 +206,10 @@ const Resumen = (props) => {
         <br />
         {formaPago === "efectivo" ? (
           <div>
-            <Typography variant="h4" sx={{ marginBottom: "20px" }}>
+            <Typography
+              variant="h4"
+              sx={{ marginBottom: "20px", margin: "30px 0px 10px 0px" }}
+            >
               ¿Con cuánto vas a pagar?
             </Typography>
             <TextField
@@ -222,7 +226,10 @@ const Resumen = (props) => {
           </div>
         ) : (
           <div>
-            <Typography variant="h4" sx={{ marginBottom: "20px" }}>
+            <Typography
+              variant="h4"
+              sx={{ marginBottom: "20px", margin: "5px 0px 5px 0px" }}
+            >
               ¿Con qué tarjeta vas a pagar?
             </Typography>
             <TextField

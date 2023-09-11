@@ -178,6 +178,7 @@ function App() {
   const boxStyle = {
     display: "flex",
     borderRadius: "5px",
+    margin: "auto",
     boxShadow: "0px 0px 20px #000000",
     backgroundColor: "#F0E6EF",
     width: "40%",
@@ -201,6 +202,7 @@ function App() {
           alignItems: "center",
           height: "100vh",
           backgroundColor: "#9C89B8",
+          fontFamily: "Roboto",
         }}
         maxWidth="false"
       >
