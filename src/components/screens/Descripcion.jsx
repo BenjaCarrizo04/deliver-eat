@@ -30,11 +30,6 @@ const Descripcion = (props) => {
 
   let navigate = useNavigate();
 
-  const handleClick = (event) => {
-    event.preventDefault();
-    hiddenFileInput.current.click();
-  };
-
   const handleOnMontoChange = (e) => {
     let err = error;
     setError({ ...err });
@@ -43,10 +38,6 @@ const Descripcion = (props) => {
 
   const handleBoton = (e) => {
     navigate("/busca");
-  };
-
-  const routeBack = (e) => {
-    navigate("/");
   };
 
   const handleOnDescriptionChange = (e) => {

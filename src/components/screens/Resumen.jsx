@@ -6,7 +6,6 @@ import {
   TextField,
   Typography,
   Button,
-  FormHelperText,
   FormLabel,
   RadioGroup,
   FormControlLabel,
@@ -163,21 +162,6 @@ const Resumen = (props) => {
     }
   };
 
-  const validateSave = () => {
-    if (formaPago === "efectivo") {
-      return (
-        Object.keys(errorTarjeta).some((x) =>
-          x === "monto" ? errorTarjeta[x].monto !== 0 : false
-        ) > 0
-      );
-    } else {
-      return Object.keys(errorTarjeta).some((x) =>
-        x !== "monto"
-          ? errorTarjeta[x] === undefined || errorTarjeta[x] !== ""
-          : false
-      );
-    }
-  };
   return (
     <div style={{ margin: "15%" }}>
       <FormControl sx={{ display: "flex", alignItems: "center" }}>

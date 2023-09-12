@@ -1,14 +1,6 @@
-import React, { useState, useEffect } from "react";
-import { Form, useNavigate } from "react-router-dom";
-import {
-  Box,
-  FormControl,
-  TextField,
-  Typography,
-  Button,
-  FormHelperText,
-  Grid,
-} from "@mui/material";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Box, Button } from "@mui/material";
 import FormDireccion from "../helpers/FormDireccion";
 
 const Entrega = (props) => {
@@ -26,10 +18,6 @@ const Entrega = (props) => {
   const routeBack = (e) => {
     navigate("/busca");
   };
-
-  // useEffect(() => {
-  //   props.setIsDisplayed(false);
-  // });
 
   return (
     <div style={{ margin: "15%" }}>
