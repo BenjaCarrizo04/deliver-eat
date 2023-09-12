@@ -186,6 +186,9 @@ function App() {
             marginTop: "30px",
             boxShadow: "0px 0px 5px #000000",
           }}
+          onClick={() => {
+            window.location.href = "/";
+          }}
         />
         <Box sx={boxStyle}>
           <BrowserRouter>
