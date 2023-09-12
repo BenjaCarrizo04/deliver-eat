@@ -13,6 +13,7 @@ import {
   Divider,
 } from "@mui/material";
 import CurrencyTextField from "../helpers/TextMoneda";
+import dayjs from "dayjs";
 
 const Resumen = (props) => {
   const [errorTarjeta, setErrorTarjeta] = useState({
@@ -83,8 +84,7 @@ const Resumen = (props) => {
 
   const onNumeroTarjetaChange = (e) => {
     let err = errorTarjeta;
-    if (e.target.value.length !== 16) {
-      err.errorTarjetaNro = "El número es incorrecto";
+    if (e.target.value.length > 16) {
     } else if (e.target.value.length === 16 && e.target.value[0] == 4) {
       const cardDigits = e.target.value.split("").map(Number);
       // Reverse the card digits
@@ -104,11 +104,12 @@ const Resumen = (props) => {
       } else {
         err.errorTarjetaNro = "El número es incorrecto";
       }
+      props.onNumeroTarjetaChange(e);
     } else {
-      err.errorTarjetaNro = "El número es incorrecto";
+        err.errorTarjetaNro = "El número es incorrecto";
+        props.onNumeroTarjetaChange(e);
     }
     setErrorTarjeta({ ...err });
-    props.onNumeroTarjetaChange(e);
   };
 
   const onNombreTarjetaChange = (e) => {
@@ -151,7 +152,7 @@ const Resumen = (props) => {
     let currentYear = new Date().getFullYear();
     if (month >= 1 && month <= 12 && 2000 + year >= currentYear) {
       const day = 1;
-      date = new Date(year + 2000, month - 1, day);
+      date = dayjs().set("year", 2000+year).set("month", month-1).endOf("month").toDate();
       if (date === "Invalid Date" || date < new Date()) {
         return false;
       } else {
@@ -273,9 +274,9 @@ const Resumen = (props) => {
             </Typography>
             <TextField
               label="Número de tarjeta"
-              type="number"
               required
               sx={{ margin: "10px 0px 15px 0px" }}
+              inputProps={{ maxLength: 16 }}
               fullWidth
               onChange={onNumeroTarjetaChange}
               error={errorTarjeta.errorTarjetaNro}
