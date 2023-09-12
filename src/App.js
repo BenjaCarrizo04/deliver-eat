@@ -142,7 +142,7 @@ function App() {
 
   const onFechaRecibidaChange = (nuevaFecha) => {
     let op = pedido;
-    op.fechaHoraRecibida = nuevaFecha.target.value;
+    op.fechaHoraRecibida = nuevaFecha;
     setPedido({ ...op });
   };
 
@@ -253,7 +253,7 @@ function App() {
                     recibida={pedido.recibida}
                     fechaHoraRecibida={pedido.fechaHoraRecibida}
                     onRecibidaChange={onRecibidaChange}
-                    onFechaRecibidaChange={onFechaRecibidaChange}
+                    onFechaHoraRecibidaChange={onFechaRecibidaChange}
                   />
                 }
               ></Route>
