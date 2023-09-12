@@ -26,7 +26,7 @@ const Recibida = (props) => {
       case "maxTime":
       case "minTime": {
         return props.fechaHoraRecibida.format("DD/MM/YYYY") === dayjs().format("DD/MM/YYYY") &&
-          props.fechaHoraRecibida.format("HH:mm") <= dayjs().format("HH:mm")
+          props.fechaHoraRecibida.format("HH:mm") > "07:00"
           ? "El horario tiene que ser posterior al actual"
           : "El horario tiene que estar entre las 07:00 y las 23:59";
       }
@@ -98,7 +98,7 @@ const Recibida = (props) => {
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DateTimePicker
                 minTime={
-                  dayjs().format("DD/MM/YYYY") === props.fechaHoraRecibida.format("DD/MM/YYYY")
+                  dayjs().format("DD/MM/YYYY") === props.fechaHoraRecibida.format("DD/MM/YYYY") && dayjs().format("HH:mm") > "07:00"
                     ? dayjs()
                     : dayjs().set("hour", 7).set("minutes", 0)
                 }
