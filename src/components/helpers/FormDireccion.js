@@ -94,6 +94,7 @@ const FormDireccion = (props) => {
         <TextField
           label="Observaciones"
           multiline
+          inputProps={{ maxLength: 240 }}
           minRows={3}
           value={props.contexto.observacion}
           onChange={props.onObservacionChange}
