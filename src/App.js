@@ -10,6 +10,8 @@ import Entrega from "./components/screens/Entrega";
 import NavBar from "./components/helpers/Navbar";
 import Recibida from "./components/screens/Recibida";
 import dayjs from "dayjs";
+import DeliveryIconFull from "./assets/delivery-icon-full.png";
+import CheckOut from "./components/screens/CheckOut";
 
 function App() {
   const [pedido, setPedido] = useState({
@@ -180,16 +182,27 @@ function App() {
     <div>
       <NavBar></NavBar>
       <Container
+        maxWidth
+        disableGutters
         sx={{
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          height: "100vh",
+          minHeight: "100%",
+          flexDirection: "column",
           backgroundColor: "#9C89B8",
           fontFamily: "Roboto",
         }}
-        maxWidth="false"
       >
+        <img
+          className="delivery-icon"
+          src={DeliveryIconFull}
+          style={{
+            width: "200px",
+            marginTop: "30px",
+            boxShadow: "0px 0px 5px #000000",
+          }}
+        />
         <Box sx={boxStyle}>
           <BrowserRouter>
             <Routes>
@@ -258,6 +271,7 @@ function App() {
                   />
                 }
               ></Route>
+              <Route path="/checkout" element={<CheckOut />}></Route>
             </Routes>
           </BrowserRouter>
         </Box>

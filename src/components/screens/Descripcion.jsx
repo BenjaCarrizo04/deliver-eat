@@ -143,10 +143,7 @@ const Descripcion = (props) => {
               helperText={error?.image}
             >
               Subir Archivo
-              <VisuallyHiddenInput
-                inputProps={{ accept: "image/jpeg" }}
-                type="file"
-              />
+              <VisuallyHiddenInput accept="image/jpeg" type="file" />
             </Button>
             <FormHelperText sx={{ display: "inline-block" }}>
               Maximo 5MB, solo JPG

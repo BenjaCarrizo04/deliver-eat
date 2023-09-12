@@ -12,9 +12,9 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
-import DeliveryIcon from "../../assets/delivery-Icon.png";
+import DeliveryIcon from "../../assets/delivery-icon.png";
 
-const pages = ["Products", "Pricing", "Blog"];
+const pages = [];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 function NavBar() {
@@ -22,7 +22,11 @@ function NavBar() {
     <AppBar position="static" style={{ background: "#B8BEDD" }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
+          <img
+            className="delivery-icon"
+            src={DeliveryIcon}
+            style={{ width: "50px" }}
+          />
           <Typography
             variant="h6"
             noWrap
@@ -37,9 +41,7 @@ function NavBar() {
               color: "inherit",
               textDecoration: "none",
             }}
-          >
-            {/*             <img className="delivery-icon" src={DeliveryIcon} /> */}
-          </Typography>
+          ></Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <IconButton
@@ -73,7 +75,6 @@ function NavBar() {
               ))}
             </Menu>
           </Box>
-          <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
           <Typography
             variant="h5"
             noWrap
