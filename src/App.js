@@ -9,11 +9,13 @@ import Busca from "./components/screens/Busca";
 import Entrega from "./components/screens/Entrega";
 import NavBar from "./components/helpers/Navbar";
 import Recibida from "./components/screens/Recibida";
+import dayjs from "dayjs";
 
 function App() {
   const [pedido, setPedido] = useState({
     descripcion: "",
     imagen: "",
+    monto: "",
     busca: {
       calle: "",
       nro: "",
@@ -33,12 +35,10 @@ function App() {
       cvv: "",
     },
     efectivo: 0,
-    precio: 0,
+    precio: 500,
     distancia: 1500,
-    recibida: {
-      fecha: "",
-      hora: "",
-    },
+    recibida: "asap",
+    fechaHoraRecibida: dayjs(),
   });
 
   const [isDisplayed, setIsDisplayed] = useState(false);
@@ -52,6 +52,12 @@ function App() {
   const onImagenChange = (nuevaImagen) => {
     let op = pedido;
     op.imagen = nuevaImagen.target.files[0];
+    setPedido({ ...op });
+  };
+
+  const onMontoChange = (nuevoMonto) => {
+    let op = pedido;
+    op.monto = nuevoMonto;
     setPedido({ ...op });
   };
 
@@ -128,16 +134,15 @@ function App() {
     setPedido({ ...op });
   };
 
-  const onFechaRecibidaChange = (nuevaFecha) => {
+  const onRecibidaChange = (nuevaRecibida) => {
     let op = pedido;
-    op.recibida.fecha = nuevaFecha.target.value;
+    op.recibida = nuevaRecibida.target.value;
     setPedido({ ...op });
   };
 
-  const onHoraRecibidaChange = (nuevaHora) => {
+  const onFechaRecibidaChange = (nuevaFecha) => {
     let op = pedido;
-    op.recibida.hora = nuevaHora.target.value;
-
+    op.fechaHoraRecibida = nuevaFecha.target.value;
     setPedido({ ...op });
   };
 
@@ -216,7 +221,9 @@ function App() {
                   <Descripcion
                     descripcion={pedido.descripcion}
                     imagen={pedido.imagen}
+                    monto={pedido.monto}
                     onDescripcionChange={onDescripcionChange}
+                    onMontoChange={onMontoChange}
                     onImagenChange={onImagenChange}
                   />
                 }
@@ -264,9 +271,10 @@ function App() {
                 element={
                   <Recibida
                     contexto={pedido.entrega}
-                    onCalleChange={onEntregaCalleChange}
-                    onNroChange={onEntregaNroChange}
-                    onObservacionChange={onEntregaObservacionChange}
+                    recibida={pedido.recibida}
+                    fechaHoraRecibida={pedido.fechaHoraRecibida}
+                    onRecibidaChange={onRecibidaChange}
+                    onFechaRecibidaChange={onFechaRecibidaChange}
                   />
                 }
               ></Route>
