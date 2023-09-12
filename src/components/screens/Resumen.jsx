@@ -148,11 +148,11 @@ const Resumen = (props) => {
   const validateDate = (dateString) => {
     const [month, year] = dateString.split("/").map(Number);
     let date = null;
-    let actualYear = new Date().getFullYear();
-    if (month >= 1 && month <= 12 && 2000 + year >= actualYear) {
+    let currentYear = new Date().getFullYear();
+    if (month >= 1 && month <= 12 && 2000 + year >= currentYear) {
       const day = 1;
       date = new Date(year + 2000, month - 1, day);
-      if (date === "Invalid Date") {
+      if (date === "Invalid Date" || date < new Date()) {
         return false;
       } else {
         return true;
@@ -306,6 +306,7 @@ const Resumen = (props) => {
                 sx={{ margin: "10px 10px 15px 0px" }}
                 onChange={onMmaaTarjetaChange}
                 error={errorTarjeta.errorTarjetaMmaa}
+                inputProps={{ maxLength: 5 }}
                 helperText={
                   errorTarjeta.errorTarjetaMmaa ? "La fecha es incorrecta" : ""
                 }
