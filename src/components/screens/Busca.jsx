@@ -15,8 +15,8 @@ const Busca = (props) => {
   let navigate = useNavigate();
 
   const [error, setError] = useState({
-      calle: undefined,
-      nro: undefined,
+    calle: undefined,
+    nro: undefined,
   });
 
   const handleBoton = (e) => {
@@ -32,7 +32,7 @@ const Busca = (props) => {
   // }, [prop.busca.calle]);
 
   return (
-    <div className="l-busca">
+    <div style={{ margin: "15%" }}>
       <FormDireccion
         contexto={props.contexto}
         onCalleChange={props.onCalleChange}
@@ -50,19 +50,22 @@ const Busca = (props) => {
         sx={{
           marginTop: "40px",
           display: "flex",
-          justifyContent: "flex-end",
+          justifyContent: "space-between",
           minHeight: "20%",
         }}
       >
+        <Button size="normal" onClick={routeBack}>
+          Atras
+        </Button>
         <Button
-            size="normal"
-            disabled={
-                Object.keys(error).some(
-                    (x) => error[x] === undefined || error[x] !== ""
-                ) > 0
-            }
-            onClick={handleBoton}
-            >
+          size="normal"
+          disabled={
+            Object.keys(error).some(
+              (x) => error[x] === undefined || error[x] !== ""
+            ) > 0
+          }
+          onClick={handleBoton}
+        >
           Siguiente
         </Button>
       </Box>

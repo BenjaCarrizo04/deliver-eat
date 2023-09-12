@@ -163,9 +163,7 @@ const Resumen = (props) => {
   return (
     <div style={{ margin: "15%" }}>
       <FormControl sx={{ display: "flex", alignItems: "center" }}>
-        <Typography variant="h4" sx={{ marginBottom: "20px" }}>
-          Resumen de pedido
-        </Typography>
+        <Typography sx={{ marginBottom: "20px" }}>Resumen de pedido</Typography>
       </FormControl>
 
       <br />
@@ -180,7 +178,7 @@ const Resumen = (props) => {
           minHeight: "80%",
         }}
       >
-        <Typography variant="h4" sx={{ marginBottom: "20px" }}>
+        <Typography sx={{ marginBottom: "20px" }}>
           ¿Cómo vas a pagar?
         </Typography>
         <FormLabel>Forma de pago</FormLabel>
@@ -207,7 +205,6 @@ const Resumen = (props) => {
         {formaPago === "efectivo" ? (
           <div>
             <Typography
-              variant="h4"
               sx={{ marginBottom: "20px", margin: "30px 0px 10px 0px" }}
             >
               ¿Con cuánto vas a pagar?
@@ -227,7 +224,6 @@ const Resumen = (props) => {
         ) : (
           <div>
             <Typography
-              variant="h4"
               sx={{ marginBottom: "20px", margin: "5px 0px 5px 0px" }}
             >
               ¿Con qué tarjeta vas a pagar?
@@ -293,10 +289,13 @@ const Resumen = (props) => {
         sx={{
           marginTop: "40px",
           display: "flex",
-          justifyContent: "flex-end",
+          justifyContent: "space-between",
           minHeight: "20%",
         }}
       >
+        <Button size="normal" onClick={routeBack}>
+          Atras
+        </Button>
         <Button
           size="normal"
           disabled={

@@ -80,7 +80,7 @@ const Descripcion = (props) => {
           alignItems: "stretch",
         }}
       >
-        <Typography variant="h4" sx={{ marginBottom: "20px" }}>
+        <Typography sx={{ marginBottom: "20px" }}>
           Preparemos tu pedido
         </Typography>
 
@@ -122,10 +122,19 @@ const Descripcion = (props) => {
         sx={{
           marginTop: "40px",
           display: "flex",
-          justifyContent: "flex-end",
+          justifyContent: "space-between",
         }}
       >
         <Button
+          sx={{ display: "flex" }}
+          size="normal"
+          disabled
+          onClick={handleBoton}
+        >
+          Atras
+        </Button>
+        <Button
+          sx={{ display: "flex" }}
           size="normal"
           disabled={
             Object.keys(error).some(
