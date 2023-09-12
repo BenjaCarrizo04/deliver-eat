@@ -44,8 +44,6 @@ const Busca = (props) => {
         titulo={"¿Donde lo buscamos?"}
         disable={false}
       />
-
-      <Button routeBack={routeBack} handleBoton={handleBoton} />
       <Box
         sx={{
           marginTop: "40px",
