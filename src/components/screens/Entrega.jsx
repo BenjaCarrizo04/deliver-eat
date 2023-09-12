@@ -50,11 +50,11 @@ const Entrega = (props) => {
           justifyContent: "space-between",
         }}
       >
-        <Button size="normal" onClick={routeBack}>
+        <Button size="small" onClick={routeBack}>
           Atras
         </Button>
         <Button
-          size="normal"
+          size="small"
           disabled={
             Object.keys(error).some(
               (x) => error[x] === undefined || error[x] !== ""

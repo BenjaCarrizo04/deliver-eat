@@ -23,8 +23,13 @@ const Resumen = (props) => {
     errorTarjetaCvv: undefined,
   });
   const [formaPago, setFormaPago] = useState("efectivo");
+  const [monto, setMonto] = useState(0);
 
   let navigate = useNavigate();
+
+  useEffect(() => {
+    setMonto(500);
+  }, []);
 
   // clean all parameters when changing pay method
   useEffect(() => {
@@ -41,24 +46,6 @@ const Resumen = (props) => {
       errorTarjetaCvv: undefined,
     });
   }, [formaPago]);
-
-  const onEfectivoClick = (e) => {
-    let fp = formaPago;
-    if (formaPago.tarjeta) {
-      fp.tarjeta = false;
-    }
-    fp.efectivo = true;
-    setFormaPago({ ...fp });
-  };
-
-  const onTarjetaClick = (e) => {
-    let fp = formaPago;
-    if (formaPago.efectivo) {
-      fp.efectivo = false;
-    }
-    fp.tarjeta = true;
-    setFormaPago({ ...fp });
-  };
 
   const handleBoton = (e) => {
     navigate("/recibida");
@@ -165,7 +152,26 @@ const Resumen = (props) => {
       <FormControl sx={{ display: "flex", alignItems: "center" }}>
         <Typography sx={{ marginBottom: "20px" }}>Resumen de pedido</Typography>
       </FormControl>
-
+      <div
+        style={{
+          marginBottom: "20px",
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
+        <Typography>Costo envío $500</Typography>
+        <br />
+      </div>
+      <Divider sx={{ margin: "5px 0px 5px 0px" }} variant="fullWidth" />
+      <Typography
+        sx={{
+          marginBottom: "20px",
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
+        Total: ${monto}
+      </Typography>
       <br />
       <Divider sx={{ margin: "5px 0px 5px 0px" }} variant="fullWidth" />
       <br />
@@ -293,11 +299,11 @@ const Resumen = (props) => {
           minHeight: "20%",
         }}
       >
-        <Button size="normal" onClick={routeBack}>
+        <Button size="small" onClick={routeBack}>
           Atras
         </Button>
         <Button
-          size="normal"
+          size="small"
           disabled={
             formaPago === "efectivo"
               ? Object.keys(errorTarjeta).some((x) =>

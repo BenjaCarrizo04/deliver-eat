@@ -54,11 +54,11 @@ const Busca = (props) => {
           minHeight: "20%",
         }}
       >
-        <Button size="normal" onClick={routeBack}>
+        <Button size="small" onClick={routeBack}>
           Atras
         </Button>
         <Button
-          size="normal"
+          size="small"
           disabled={
             Object.keys(error).some(
               (x) => error[x] === undefined || error[x] !== ""

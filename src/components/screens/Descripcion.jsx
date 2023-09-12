@@ -127,7 +127,7 @@ const Descripcion = (props) => {
       >
         <Button
           sx={{ display: "flex" }}
-          size="normal"
+          size="small"
           disabled
           onClick={handleBoton}
         >
@@ -135,7 +135,7 @@ const Descripcion = (props) => {
         </Button>
         <Button
           sx={{ display: "flex" }}
-          size="normal"
+          size="small"
           disabled={
             Object.keys(error).some(
               (x) => error[x] === undefined || error[x] !== ""

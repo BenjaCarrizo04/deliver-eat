@@ -130,7 +130,7 @@ const Recibida = (props) => {
         }}
       >
         <Button
-          size="normal"
+          size="small"
           disabled={error != null && recibida === "date" ? true : false}
           onClick={handleBoton}
         >
