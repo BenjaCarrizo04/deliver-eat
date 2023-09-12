@@ -10,6 +10,7 @@ import {
 } from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { styled } from "@mui/material/styles";
+import CurrencyTextField from "../helpers/TextMoneda"
 
 const Descripcion = (props) => {
   const hiddenFileInput = React.useRef(null);
@@ -17,6 +18,7 @@ const Descripcion = (props) => {
   const [error, setError] = useState({
     description: undefined,
     imagen: "",
+    monto: "",
   });
 
   useEffect(() => {
@@ -31,6 +33,12 @@ const Descripcion = (props) => {
     event.preventDefault();
     hiddenFileInput.current.click();
   };
+
+  const handleOnMontoChange = (e) => {
+      let err = error;
+      setError({...err});
+      props.onMontoChange(e);
+  }
 
   const handleBoton = (e) => {
     navigate("/busca");
@@ -105,7 +113,21 @@ const Descripcion = (props) => {
             helperText={error?.description}
             value={props.descripcion}
           ></TextField>
-          <Box>
+          <CurrencyTextField
+            label="Monto"
+            variant="outlined"
+            value={props.monto}
+            currencySymbol="$"
+            minimumValue="0"
+            outputFormat="number"
+            decimalCharacter=","
+            digitGroupSeparator="."
+            onChange={(event, value) => handleOnMontoChange(value)}
+            error={error?.monto ? true : false}
+            helperText={error?.monto} />
+          <Box
+            sx={{ margin: "10px 0px 15px 0px" }}
+          >
             <Button
               component="label"
               variant="contained"
