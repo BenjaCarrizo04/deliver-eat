@@ -15,7 +15,7 @@ function App() {
   const [pedido, setPedido] = useState({
     descripcion: "",
     imagen: "",
-    monto: "",
+    monto: 0,
     busca: {
       calle: "",
       nro: "",
@@ -129,7 +129,7 @@ function App() {
 
   const onMontoEfectivoChange = (nuevoMonto) => {
     let op = pedido;
-    op.efectivo = Number(nuevoMonto.target.value);
+    op.efectivo = Number(nuevoMonto);
 
     setPedido({ ...op });
   };
@@ -218,6 +218,7 @@ function App() {
                     onCvvTarjetaChange={onCvvTarjetaChange}
                     onMontoEfectivoChange={onMontoEfectivoChange}
                     efectivo={pedido.efectivo}
+                    monto={pedido.monto}
                     precio={pedido.precio}
                   />
                 }
