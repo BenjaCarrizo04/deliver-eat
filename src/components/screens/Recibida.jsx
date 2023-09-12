@@ -127,15 +127,18 @@ const Recibida = (props) => {
         sx={{
           marginTop: "40px",
           display: "flex",
-          justifyContent: "flex-end",
+          justifyContent: "space-between",
         }}
       >
+        <Button size="small" onClick={routeBack}>
+          Atras
+        </Button>
         <Button
           size="small"
           disabled={error != null && props.recibida === "date" ? true : false}
           onClick={handleBoton}
         >
-          Siguiente
+          Finalizar
         </Button>
       </Box>
     </div>
