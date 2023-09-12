@@ -38,7 +38,6 @@ function App() {
     },
     efectivo: 0,
     precio: 500,
-    distancia: 1500,
     recibida: "asap",
     fechaHoraRecibida: dayjs(),
   });
@@ -145,19 +144,6 @@ function App() {
     op.fechaHoraRecibida = nuevaFecha;
     setPedido({ ...op });
   };
-
-  useEffect(() => {
-    let op = pedido;
-    let dis = op.distancia;
-
-    if (dis < 500) {
-      dis = 500;
-    }
-
-    op.precio = Math.ceil(dis / 500) * 100;
-
-    setPedido({ ...op });
-  }, [pedido.distancia]);
 
   const boxStyle = {
     display: "flex",
