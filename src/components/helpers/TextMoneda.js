@@ -1,8 +1,8 @@
-import React from "react"
-import PropTypes from "prop-types"
-import AutoNumeric from "autonumeric"
+import React from "react";
+import PropTypes from "prop-types";
+import AutoNumeric from "autonumeric";
 // import { withStyles } from "@mui/styles"
-import { TextField, InputAdornment } from "@mui/material"
+import { TextField, InputAdornment } from "@mui/material";
 
 // const styles = theme => ({
 //   textField: props => ({
@@ -26,13 +26,13 @@ import { TextField, InputAdornment } from "@mui/material"
 
 class CurrencyTextField extends React.Component {
   constructor(props) {
-    super(props)
-    this.getValue = this.getValue.bind(this)
-    this.callEventHandler = this.callEventHandler.bind(this)
+    super(props);
+    this.getValue = this.getValue.bind(this);
+    this.callEventHandler = this.callEventHandler.bind(this);
   }
 
   componentDidMount() {
-    const { currencySymbol, ...others } = this.props
+    const { currencySymbol, ...others } = this.props;
     this.autonumeric = new AutoNumeric(this.input, this.props.value, {
       ...this.props.preDefined,
       ...others,
@@ -43,44 +43,39 @@ class CurrencyTextField extends React.Component {
       onKeyUp: undefined,
       onKeyDown: undefined,
       watchExternalChanges: false,
-    })
+    });
   }
   componentWillUnmount() {
-    this.autonumeric.remove()
+    this.autonumeric.remove();
   }
 
   componentWillReceiveProps(newProps) {
     const isValueChanged =
-      this.props.value !== newProps.value && this.getValue() !== newProps.value
+      this.props.value !== newProps.value && this.getValue() !== newProps.value;
 
     if (isValueChanged) {
-      this.autonumeric.set(newProps.value)
+      this.autonumeric.set(newProps.value);
     }
   }
 
   getValue() {
-    if (!this.autonumeric) return
+    if (!this.autonumeric) return;
     const valueMapper = {
-      string: numeric => numeric.getNumericString(),
-      number: numeric => numeric.getNumber(),
-    }
-    return valueMapper[this.props.outputFormat](this.autonumeric)
+      string: (numeric) => numeric.getNumericString(),
+      number: (numeric) => numeric.getNumber(),
+    };
+    return valueMapper[this.props.outputFormat](this.autonumeric);
   }
   callEventHandler(event, eventName) {
-    if (!this.props[eventName]) return
-    this.props[eventName](event, this.getValue())
+    if (!this.props[eventName]) return;
+    this.props[eventName](event, this.getValue());
   }
   render() {
-    const {
-      classes,
-      currencySymbol,
-      inputProps,
-      InputProps,
-      ...others
-    } = this.props
+    const { classes, currencySymbol, inputProps, InputProps, ...others } =
+      this.props;
 
-    const otherProps = {}
-    ;[
+    const otherProps = {};
+    [
       "id",
       "label",
       "className",
@@ -106,17 +101,17 @@ class CurrencyTextField extends React.Component {
       "size",
       "FormHelperTextProps",
       "placeholder",
-    ].forEach(prop => (otherProps[prop] = this.props[prop]))
+    ].forEach((prop) => (otherProps[prop] = this.props[prop]));
 
     return (
       <TextField
-        inputRef={ref => (this.input = ref)}
-        onChange={e => this.callEventHandler(e, "onChange")}
-        onFocus={e => this.callEventHandler(e, "onFocus")}
-        onBlur={e => this.callEventHandler(e, "onBlur")}
-        onKeyPress={e => this.callEventHandler(e, "onKeyPress")}
-        onKeyUp={e => this.callEventHandler(e, "onKeyUp")}
-        onKeyDown={e => this.callEventHandler(e, "onKeyDown")}
+        inputRef={(ref) => (this.input = ref)}
+        onChange={(e) => this.callEventHandler(e, "onChange")}
+        onFocus={(e) => this.callEventHandler(e, "onFocus")}
+        onBlur={(e) => this.callEventHandler(e, "onBlur")}
+        onKeyPress={(e) => this.callEventHandler(e, "onKeyPress")}
+        onKeyUp={(e) => this.callEventHandler(e, "onKeyUp")}
+        onKeyDown={(e) => this.callEventHandler(e, "onKeyDown")}
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">{currencySymbol}</InputAdornment>
@@ -125,7 +120,7 @@ class CurrencyTextField extends React.Component {
         }}
         {...otherProps}
       />
-    )
+    );
   }
 }
 
@@ -201,7 +196,7 @@ CurrencyTextField.propTypes = {
   readOnly: PropTypes.bool,
   /** predefined objects are available in <a href="https://www.nodenpm.com/autonumeric/4.5.1/detail.html#predefined-options">AutoNumeric</a>*/
   preDefined: PropTypes.object,
-}
+};
 
 CurrencyTextField.defaultProps = {
   type: "text",
@@ -211,9 +206,9 @@ CurrencyTextField.defaultProps = {
   textAlign: "right",
   maximumValue: "10000000000000",
   minimumValue: "-10000000000000",
-}
+};
 // export default withStyles(styles)(CurrencyTextField)
 //
-export default CurrencyTextField
+export default CurrencyTextField;
 
-export const predefinedOptions = AutoNumeric.getPredefinedOptions()
+export const predefinedOptions = AutoNumeric.getPredefinedOptions();

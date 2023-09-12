@@ -73,10 +73,10 @@ const Resumen = (props) => {
     let err = errorTarjeta;
     if (e === 0 || e == "") {
       err.efectivo = "El monto es incorrecto";
-    } else if (e < monto+props.monto) {
+    } else if (e < monto + props.monto) {
       err.efectivo = "El monto es menor al total";
     } else {
-        err.efectivo = "";
+      err.efectivo = "";
     }
     setErrorTarjeta({ ...err });
     props.onMontoEfectivoChange(e);
@@ -87,24 +87,24 @@ const Resumen = (props) => {
     if (e.target.value.length !== 16) {
       err.errorTarjetaNro = "El número es incorrecto";
     } else if (e.target.value.length === 16 && e.target.value[0] == 4) {
-        const cardDigits = e.target.value.split('').map(Number);
-        // Reverse the card digits
-        cardDigits.reverse();
-        // Double every second digit starting from the right
-        for (let i = 1; i < cardDigits.length; i += 2) {
-            cardDigits[i] *= 2;
-            if (cardDigits[i] > 9) {
-                cardDigits[i] -= 9;
-            }
+      const cardDigits = e.target.value.split("").map(Number);
+      // Reverse the card digits
+      cardDigits.reverse();
+      // Double every second digit starting from the right
+      for (let i = 1; i < cardDigits.length; i += 2) {
+        cardDigits[i] *= 2;
+        if (cardDigits[i] > 9) {
+          cardDigits[i] -= 9;
         }
-        // Calculate the checksum (sum of all digits)
-        const checksum = cardDigits.reduce((acc, digit) => acc + digit, 0);
-        // Check if the checksum is divisible by 10
-        if (checksum % 10 === 0) {
-            err.errorTarjetaNro = "";
-        } else {
-            err.errorTarjetaNro = "El número es incorrecto";
-        }
+      }
+      // Calculate the checksum (sum of all digits)
+      const checksum = cardDigits.reduce((acc, digit) => acc + digit, 0);
+      // Check if the checksum is divisible by 10
+      if (checksum % 10 === 0) {
+        err.errorTarjetaNro = "";
+      } else {
+        err.errorTarjetaNro = "El número es incorrecto";
+      }
     } else {
       err.errorTarjetaNro = "El número es incorrecto";
     }
@@ -183,23 +183,25 @@ const Resumen = (props) => {
       <FormControl sx={{ display: "flex", alignItems: "center" }}>
         <Typography sx={{ marginBottom: "20px" }}>Resumen de pedido</Typography>
       </FormControl>
-      { (props.monto != 0) ?
-          <>
+      {props.monto != 0 ? (
+        <>
           <div
-          style={{
+            style={{
               marginBottom: "20px",
-                  display: "flex",
-                  justifyContent: "center",
-          }}
+              display: "flex",
+              justifyContent: "center",
+            }}
           >
-          <Typography>Precio producto ${Math.round(props.monto * 100) / 100}</Typography>
-          <br />
+            <Typography>
+              Precio producto ${Math.round(props.monto * 100) / 100}
+            </Typography>
+            <br />
           </div>
           <Divider sx={{ margin: "5px 0px 5px 0px" }} variant="fullWidth" />
-          </>
-          :
-          <></>
-      }
+        </>
+      ) : (
+        <></>
+      )}
       <div
         style={{
           marginBottom: "20px",
@@ -218,7 +220,7 @@ const Resumen = (props) => {
           justifyContent: "center",
         }}
       >
-        Total: ${Math.round((monto+props.monto) * 100) / 100}
+        Total: ${Math.round((monto + props.monto) * 100) / 100}
       </Typography>
       <br />
       <Divider sx={{ margin: "5px 0px 5px 0px" }} variant="fullWidth" />
@@ -263,19 +265,20 @@ const Resumen = (props) => {
             >
               ¿Con cuánto vas a pagar?
             </Typography>
-              <CurrencyTextField
-                label="Monto"
-                variant="outlined"
-                value={props.efectivo}
-                currencySymbol="$"
-                fullWidth
-                minimumValue="0"
-                outputFormat="number"
-                decimalCharacter=","
-                digitGroupSeparator="."
-                onChange={(_, value) => onMontoEfectivoChange(value)}
-                error={errorTarjeta?.efectivo ? true : false}
-                helperText={errorTarjeta?.efectivo} />
+            <CurrencyTextField
+              label="Monto"
+              variant="outlined"
+              value={props.efectivo}
+              currencySymbol="$"
+              fullWidth
+              minimumValue="0"
+              outputFormat="number"
+              decimalCharacter=","
+              digitGroupSeparator="."
+              onChange={(_, value) => onMontoEfectivoChange(value)}
+              error={errorTarjeta?.efectivo ? true : false}
+              helperText={errorTarjeta?.efectivo}
+            />
           </div>
         ) : (
           <div>

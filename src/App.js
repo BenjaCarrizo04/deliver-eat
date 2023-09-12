@@ -43,8 +43,6 @@ function App() {
     fechaHoraRecibida: dayjs(),
   });
 
-  const [isDisplayed, setIsDisplayed] = useState(false);
-
   const onDescripcionChange = (nuevaDescripcion) => {
     let op = pedido;
     op.descripcion = nuevaDescripcion.target.value;
