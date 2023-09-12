@@ -86,8 +86,27 @@ const Resumen = (props) => {
     let err = errorTarjeta;
     if (e.target.value.length !== 16) {
       err.errorTarjetaNro = "El número es incorrecto";
+    } else if (e.target.value.length === 16 && e.target.value[0] == 4) {
+        const cardDigits = e.target.value.split('').map(Number);
+        // Reverse the card digits
+        cardDigits.reverse();
+        // Double every second digit starting from the right
+        for (let i = 1; i < cardDigits.length; i += 2) {
+            cardDigits[i] *= 2;
+            if (cardDigits[i] > 9) {
+                cardDigits[i] -= 9;
+            }
+        }
+        // Calculate the checksum (sum of all digits)
+        const checksum = cardDigits.reduce((acc, digit) => acc + digit, 0);
+        // Check if the checksum is divisible by 10
+        if (checksum % 10 === 0) {
+            err.errorTarjetaNro = "";
+        } else {
+            err.errorTarjetaNro = "El número es incorrecto";
+        }
     } else {
-      err.errorTarjetaNro = "";
+      err.errorTarjetaNro = "El número es incorrecto";
     }
     setErrorTarjeta({ ...err });
     props.onNumeroTarjetaChange(e);
