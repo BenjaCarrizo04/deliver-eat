@@ -20,13 +20,11 @@ function App() {
     monto: 0,
     busca: {
       calle: "",
-      nro: "",
       ciudad: "cordoba",
       observacion: "",
     },
     entrega: {
       calle: "",
-      nro: "",
       ciudad: "cordoba",
       observacion: "",
     },

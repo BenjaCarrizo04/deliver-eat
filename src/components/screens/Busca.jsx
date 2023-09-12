@@ -16,7 +16,6 @@ const Busca = (props) => {
 
   const [error, setError] = useState({
     calle: undefined,
-    nro: undefined,
   });
 
   const handleBoton = (e) => {

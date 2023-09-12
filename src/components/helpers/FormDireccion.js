@@ -25,7 +25,6 @@ const FormDireccion = (props) => {
   useEffect(() => {
     if (props.contexto.calle !== "") {
       handleOnCalleChange({ target: { value: props.contexto.calle } });
-      handleOnNroChange({ target: { value: props.contexto.nro } });
     }
   }, []);
 
@@ -38,18 +37,6 @@ const FormDireccion = (props) => {
     }
     props.setError({ ...err });
     props.onCalleChange(e);
-  };
-
-  const handleOnNroChange = (e) => {
-    let err = props.error;
-    if (e.target.value === "") {
-      console.log(e.target.value);
-      err.nro = "El número no puede estar vacío";
-    } else {
-      err.nro = "";
-    }
-    props.setError({ ...err });
-    props.onNroChange(e);
   };
 
   const ciudades = [
@@ -77,27 +64,16 @@ const FormDireccion = (props) => {
             </MenuItem>
           ))}
         </TextField>
-        <div style={{ display: "flex" }}>
-          <TextField
-            label="Calle"
-            required
-            error={props.error?.calle ? true : false}
-            value={props.contexto.calle}
-            helperText={props.error?.calle}
-            onChange={handleOnCalleChange}
-            sx={{ width: "75%", margin: "10px 10px 15px 0px" }}
-          />
-          <TextField
-            label="Número"
-            required
-            error={props.error?.nro ? true : false}
-            value={props.contexto.nro}
-            helperText={props.error?.nro}
-            type="number"
-            onChange={handleOnNroChange}
-            sx={{ margin: "10px 0px 15px 10px" }}
-          />
-        </div>
+        <TextField
+          label="Calle y Número"
+          fullWidth
+          required
+          error={props.error?.calle ? true : false}
+          value={props.contexto.calle}
+          helperText={props.error?.calle}
+          onChange={handleOnCalleChange}
+          sx={{ margin: "10px 10px 15px 0px" }}
+        />
         <TextField
           label="Observaciones"
           multiline

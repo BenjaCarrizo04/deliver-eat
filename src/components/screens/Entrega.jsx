@@ -6,7 +6,6 @@ import FormDireccion from "../helpers/FormDireccion";
 const Entrega = (props) => {
   const [error, setError] = useState({
     calle: undefined,
-    nro: undefined,
   });
 
   let navigate = useNavigate();
