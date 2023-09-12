@@ -69,7 +69,7 @@ function App() {
 
   const onBuscaNroChange = (nuevoNro) => {
     let op = pedido;
-    op.busca.nro = nuevoNro.target.value.replace(/\D/g, "");
+    op.busca.nro = nuevoNro.target.value?.replace(/\D/g, "");
     setPedido({ ...op });
   };
   const onBuscaCiudadChange = (nuevaCiudad) => {
@@ -92,7 +92,7 @@ function App() {
 
   const onEntregaNroChange = (nuevoNro) => {
     let op = pedido;
-    op.entrega.nro = nuevoNro.target.value.replace(/\D/g, "");
+    op.entrega.nro = nuevoNro.target.value?.replace(/\D/g, "");
     setPedido({ ...op });
   };
 
@@ -145,27 +145,6 @@ function App() {
     op.fechaHoraRecibida = nuevaFecha.target.value;
     setPedido({ ...op });
   };
-
-  useEffect(() => {
-    let op = pedido;
-    if (
-      pedido.entrega.calle === "Bv. Chacabuco" &&
-      pedido.busca.calle === "Rondeau" &&
-      pedido.entrega.nro === "787" &&
-      pedido.busca.nro === "300"
-    ) {
-      op.distancia = 400;
-    } else if (
-      pedido.entrega.calle === "Bv. Chacabuco" &&
-      pedido.busca.calle === "Lima" &&
-      pedido.entrega.nro === "787" &&
-      pedido.busca.nro === "300"
-    ) {
-      op.distancia = 900;
-    }
-
-    setPedido({ ...op });
-  }, [isDisplayed]);
 
   useEffect(() => {
     let op = pedido;

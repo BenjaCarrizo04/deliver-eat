@@ -10,14 +10,21 @@ import {
   Grid,
   InputLabel,
 } from "@mui/material";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const FormDireccion = (props) => {
   const [num, setNum] = useState();
 
+  useEffect(() => {
+    if (props.contexto.calle !== "") {
+      handleOnCalleChange({ target: { value: props.contexto.calle } });
+      handleOnNroChange({ target: { value: props.contexto.nro } });
+    }
+  }, []);
+
   const handleOnCalleChange = (e) => {
     let err = props.error;
-    if (e.target.value === "" || e.target.value === undefined) {
+    if (e.target.value === "") {
       err.calle = "La calle no puede estar vacía";
     } else {
       err.calle = "";
@@ -28,7 +35,7 @@ const FormDireccion = (props) => {
 
   const handleOnNroChange = (e) => {
     let err = props.error;
-    if (e.target.value === "" || e.target.value === undefined) {
+    if (e.target.value === "") {
       console.log(e.target.value);
       err.nro = "El número no puede estar vacío";
     } else {

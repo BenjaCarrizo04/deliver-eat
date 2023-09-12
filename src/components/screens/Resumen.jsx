@@ -47,6 +47,19 @@ const Resumen = (props) => {
     });
   }, [formaPago]);
 
+  useEffect(() => {
+    if (props.efectivo !== 0) {
+      if (formaPago === "efectivo") {
+        onMontoEfectivoChange({ target: { value: props.efectivo } });
+      } else {
+        onNumeroTarjetaChange({ target: { value: props.tarjeta.numero } });
+        onNombreTarjetaChange({ target: { value: props.tarjeta.nombre } });
+        onCvvTarjetaChange({ target: { value: props.tarjeta.cvv } });
+        onMmaaTarjetaChange({ target: { value: props.tarjeta.mmaa } });
+      }
+    }
+  }, []);
+
   const handleBoton = (e) => {
     navigate("/recibida");
   };
@@ -57,11 +70,7 @@ const Resumen = (props) => {
 
   const onMontoEfectivoChange = (e) => {
     let err = errorTarjeta;
-    if (
-      e.target.value === "0" ||
-      e.target.value === undefined ||
-      e.target.value === ""
-    ) {
+    if (e.target.value === "0" || e.target.value === "") {
       err.efectivo = "El monto es incorrecto";
     } else {
       err.efectivo = "";

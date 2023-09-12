@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Form, useNavigate } from "react-router-dom";
 import {
   Box,
@@ -19,6 +19,12 @@ const Descripcion = (props) => {
     imagen: "",
   });
 
+  useEffect(() => {
+    if (props.descripcion !== "") {
+      handleOnDescriptionChange({ target: { value: props.descripcion } });
+    }
+  }, []);
+
   let navigate = useNavigate();
 
   const handleClick = (event) => {
@@ -37,7 +43,8 @@ const Descripcion = (props) => {
   const handleOnDescriptionChange = (e) => {
     // validate descpription is not empty
     let err = error;
-    if (e.target.value === "" || e.target.value === undefined) {
+
+    if (e.target.value === "") {
       err.description = "La descripcion no puede estar vacia";
     } else {
       err.description = "";
