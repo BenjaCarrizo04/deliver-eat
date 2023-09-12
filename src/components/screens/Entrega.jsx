@@ -41,7 +41,7 @@ const Entrega = (props) => {
         error={error}
         setError={setError}
         titulo={"¿Donde lo entregamos?"}
-        disable={true}
+        disabled={true}
       />
       <Box
         sx={{

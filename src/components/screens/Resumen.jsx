@@ -13,6 +13,7 @@ import {
   Radio,
   Divider,
 } from "@mui/material";
+import CurrencyTextField from "../helpers/TextMoneda";
 
 const Resumen = (props) => {
   const [errorTarjeta, setErrorTarjeta] = useState({
@@ -37,7 +38,7 @@ const Resumen = (props) => {
     props.onNombreTarjetaChange({ target: { value: "" } });
     props.onCvvTarjetaChange({ target: { value: "" } });
     props.onMmaaTarjetaChange({ target: { value: "" } });
-    props.onMontoEfectivoChange({ target: { value: "" } });
+    props.onMontoEfectivoChange(0);
     setErrorTarjeta({
       efectivo: undefined,
       errorTarjetaNro: undefined,
@@ -70,10 +71,12 @@ const Resumen = (props) => {
 
   const onMontoEfectivoChange = (e) => {
     let err = errorTarjeta;
-    if (e.target.value === "0" || e.target.value === "") {
+    if (e === 0 || e == "") {
       err.efectivo = "El monto es incorrecto";
+    } else if (e < monto+props.monto) {
+      err.efectivo = "El monto es menor al total";
     } else {
-      err.efectivo = "";
+        err.efectivo = "";
     }
     setErrorTarjeta({ ...err });
     props.onMontoEfectivoChange(e);
@@ -161,6 +164,23 @@ const Resumen = (props) => {
       <FormControl sx={{ display: "flex", alignItems: "center" }}>
         <Typography sx={{ marginBottom: "20px" }}>Resumen de pedido</Typography>
       </FormControl>
+      { (props.monto != 0) ?
+          <>
+          <div
+          style={{
+              marginBottom: "20px",
+                  display: "flex",
+                  justifyContent: "center",
+          }}
+          >
+          <Typography>Precio producto ${Math.round(props.monto * 100) / 100}</Typography>
+          <br />
+          </div>
+          <Divider sx={{ margin: "5px 0px 5px 0px" }} variant="fullWidth" />
+          </>
+          :
+          <></>
+      }
       <div
         style={{
           marginBottom: "20px",
@@ -179,7 +199,7 @@ const Resumen = (props) => {
           justifyContent: "center",
         }}
       >
-        Total: ${monto}
+        Total: ${Math.round((monto+props.monto) * 100) / 100}
       </Typography>
       <br />
       <Divider sx={{ margin: "5px 0px 5px 0px" }} variant="fullWidth" />
@@ -224,17 +244,19 @@ const Resumen = (props) => {
             >
               ¿Con cuánto vas a pagar?
             </Typography>
-            <TextField
-              label="Monto"
-              type="number"
-              required
-              sx={{ margin: "10px 0px 15px 0px" }}
-              fullWidth
-              onChange={onMontoEfectivoChange}
-              error={errorTarjeta.efectivo}
-              helperText={errorTarjeta.efectivo}
-              value={props.efectivo}
-            ></TextField>
+              <CurrencyTextField
+                label="Monto"
+                variant="outlined"
+                value={props.efectivo}
+                currencySymbol="$"
+                fullWidth
+                minimumValue="0"
+                outputFormat="number"
+                decimalCharacter=","
+                digitGroupSeparator="."
+                onChange={(_, value) => onMontoEfectivoChange(value)}
+                error={errorTarjeta?.efectivo ? true : false}
+                helperText={errorTarjeta?.efectivo} />
           </div>
         ) : (
           <div>

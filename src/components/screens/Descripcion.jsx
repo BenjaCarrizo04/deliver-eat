@@ -123,6 +123,7 @@ const Descripcion = (props) => {
             variant="outlined"
             value={props.monto}
             currencySymbol="$"
+            fullWidth
             minimumValue="0"
             outputFormat="number"
             decimalCharacter=","

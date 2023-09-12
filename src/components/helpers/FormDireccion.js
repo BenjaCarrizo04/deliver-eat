@@ -58,6 +58,7 @@ const FormDireccion = (props) => {
           select
           label="Ciudad"
           fullWidth
+          disabled={props.disabled}
           required
           value={props.contexto.ciudad}
           onChange={props.onCiudadChange}

@@ -19,21 +19,14 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { DateTimePicker } from "@mui/x-date-pickers";
 
 const Recibida = (props) => {
-  const [recibida, setRecibida] = useState("asap");
   const [error, setError] = useState(null);
-  const [dateTime, setDateTime] = useState(dayjs());
 
   const errorMessage = useMemo(() => {
     switch (error) {
       case "maxTime":
       case "minTime": {
-        console.log(
-          dateTime.format("DD/MM/YYYY") === dayjs().format("DD/MM/YYYY"),
-          dateTime.format("HH:mm"),
-          dayjs().format("HH:mm")
-        );
-        return dateTime.format("DD/MM/YYYY") === dayjs().format("DD/MM/YYYY") &&
-          dateTime.format("HH:mm") <= dayjs().format("HH:mm")
+        return props.fechaHoraRecibida.format("DD/MM/YYYY") === dayjs().format("DD/MM/YYYY") &&
+          props.fechaHoraRecibida.format("HH:mm") <= dayjs().format("HH:mm")
           ? "El horario tiene que ser posterior al actual"
           : "El horario tiene que estar entre las 07:00 y las 23:59";
       }
@@ -57,6 +50,14 @@ const Recibida = (props) => {
     navigate("/resumen");
   };
 
+  const handleOnRecibidaChange = (e) => {
+      props.onRecibidaChange(e);
+  };
+
+  const handleOnFechaHoraRecibidaChange = (newDT) => {
+      props.onFechaHoraRecibidaChange(newDT);
+  };
+
   return (
     <div style={{ margin: "15%" }}>
       <FormControl
@@ -73,8 +74,8 @@ const Recibida = (props) => {
         <RadioGroup
           row
           sx={{ display: "inline-flex" }}
-          value={recibida}
-          onChange={(e) => setRecibida(e.target.value)}
+          value={props.recibida}
+          onChange={handleOnRecibidaChange}
         >
           <FormControlLabel
             value="asap"
@@ -87,7 +88,7 @@ const Recibida = (props) => {
             label="Elegir fecha y hora"
           />
         </RadioGroup>
-        {recibida === "asap" ? (
+        {props.recibida === "asap" ? (
           <></>
         ) : (
           <div>
@@ -97,7 +98,7 @@ const Recibida = (props) => {
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DateTimePicker
                 minTime={
-                  dayjs().format("DD/MM/YYYY") === dateTime.format("DD/MM/YYYY")
+                  dayjs().format("DD/MM/YYYY") === props.fechaHoraRecibida.format("DD/MM/YYYY")
                     ? dayjs()
                     : dayjs().set("hour", 7).set("minutes", 0)
                 }
@@ -107,9 +108,9 @@ const Recibida = (props) => {
                   .set("minutes", 59)}
                 maxDate={dayjs().add(6, "day")}
                 minDate={dayjs()}
-                value={dateTime}
+                value={props.fechaHoraRecibida}
                 onError={(newError) => setError(newError)}
-                onChange={(newDT) => setDateTime(newDT)}
+                onChange={(newDT) => handleOnFechaHoraRecibidaChange(newDT)}
                 closeOnSelect={false}
                 ampm={false}
                 slotProps={{
@@ -131,7 +132,7 @@ const Recibida = (props) => {
       >
         <Button
           size="small"
-          disabled={error != null && recibida === "date" ? true : false}
+          disabled={error != null && props.recibida === "date" ? true : false}
           onClick={handleBoton}
         >
           Siguiente
