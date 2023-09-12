@@ -19,7 +19,7 @@ const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 function NavBar() {
   return (
-    <AppBar position="static" style={{ background: "#3b3838" }}>
+    <AppBar position="static" style={{ background: "#B8BEDD" }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />

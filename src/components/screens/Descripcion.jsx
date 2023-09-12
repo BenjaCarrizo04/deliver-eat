@@ -10,7 +10,8 @@ import {
 } from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { styled } from "@mui/material/styles";
-import CurrencyTextField from "../helpers/TextMoneda"
+import CurrencyTextField from "../helpers/TextMoneda";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const Descripcion = (props) => {
   const hiddenFileInput = React.useRef(null);
@@ -35,10 +36,10 @@ const Descripcion = (props) => {
   };
 
   const handleOnMontoChange = (e) => {
-      let err = error;
-      setError({...err});
-      props.onMontoChange(e);
-  }
+    let err = error;
+    setError({ ...err });
+    props.onMontoChange(e);
+  };
 
   const handleBoton = (e) => {
     navigate("/busca");
@@ -51,7 +52,6 @@ const Descripcion = (props) => {
   const handleOnDescriptionChange = (e) => {
     // validate descpription is not empty
     let err = error;
-
     if (e.target.value === "") {
       err.description = "La descripcion no puede estar vacia";
     } else {
@@ -62,15 +62,16 @@ const Descripcion = (props) => {
   };
 
   const handleOnImageChange = (e) => {
-    // validate image is not larger than 5mb
     let err = error;
-    if (e.target.files[0].size * 1e-6 > 5.0) {
-      err.image = "El archivo es demasiado grande";
-    } else {
-      err.image = "";
+    if (e.target.files[0].type && e.target.files[0].type === "image/jpeg") {
+      if (e.target.files[0].size * 1e-6 > 5.0) {
+        err.image = "El archivo es demasiado grande";
+      } else {
+        err.image = "";
+      }
+      setError({ ...err });
+      props.onImagenChange(e);
     }
-    setError({ ...err });
-    props.onImagenChange(e);
   };
 
   const VisuallyHiddenInput = styled("input")`
@@ -84,6 +85,10 @@ const Descripcion = (props) => {
     white-space: nowrap;
     width: 1px;
   `;
+
+  const handleOnDeleteImage = (e) => {
+    props.onImagenChange({ target: { files: [] } });
+  };
 
   return (
     <div style={{ margin: "15%" }}>
@@ -124,26 +129,40 @@ const Descripcion = (props) => {
             digitGroupSeparator="."
             onChange={(event, value) => handleOnMontoChange(value)}
             error={error?.monto ? true : false}
-            helperText={error?.monto} />
-          <Box
-            sx={{ margin: "10px 0px 15px 0px" }}
-          >
+            helperText={error?.monto}
+          />
+          <Box sx={{ margin: "10px 0px 15px 0px" }}>
             <Button
               component="label"
               variant="contained"
               startIcon={<CloudUploadIcon />}
               href="#file-upload"
-              onChange={handleOnImageChange}
+              onChange={(e) => handleOnImageChange(e)}
               error={error?.image ? true : false}
               helperText={error?.image}
             >
               Subir Archivo
-              <VisuallyHiddenInput accept="image/jpeg" type="file" />
+              <VisuallyHiddenInput
+                inputProps={{ accept: "image/jpeg" }}
+                type="file"
+              />
             </Button>
             <FormHelperText sx={{ display: "inline-block" }}>
-              {props.imagen ? props.imagen.name : ""}
+              Maximo 5MB, solo JPG
             </FormHelperText>
-            <FormHelperText>Maximo 5MB, solo JPG</FormHelperText>
+            {props.imagen && (
+              <div>
+                <Button onClick={handleOnDeleteImage}>
+                  <FormHelperText variant="standard">
+                    {props.imagen ? props.imagen.name : ""}
+                  </FormHelperText>
+                  <DeleteIcon></DeleteIcon>
+                </Button>
+                <FormHelperText error>
+                  {error.image ? error.image : ""}
+                </FormHelperText>
+              </div>
+            )}
           </Box>
         </div>
       </FormControl>
